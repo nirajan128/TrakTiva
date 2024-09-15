@@ -1,13 +1,11 @@
 /* eslint-disable no-unused-vars */
 import dotenv from "dotenv";
 import pg from "pg";
-dotenv.config({ path: "../.env" }); //since its not in the root directory
+dotenv.config(); //since its not in the root directory
 
 const db = new pg.Pool({
   connectionString: process.env.DATABASE_URL,
-  ssl: {
-    rejectUnauthorized: false,
-  },
+  ssl: false,
 });
 
 // Test the connection
