@@ -4,7 +4,9 @@ import cors from "cors";
 import bodyParser from "body-parser";
 import passport from "./config/passport.js";
 import session from "express-session";
-
+//routes
+import authRoutes from "./routes/auth.js";
+import userData from "./routes/userData.js";
 dotenv.config();
 
 const app = express();
@@ -38,8 +40,9 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json()); // Parse JSON bodies
 
 // Define routes
-import authRoutes from "./routes/auth.js";
+
 app.use("/auth", authRoutes); // example route for auth
+app.use("/user", userData);
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
