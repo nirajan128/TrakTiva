@@ -26,7 +26,8 @@ function UserData() {
 
   const logOut = async () => {
     try {
-      await axios.get("http://localhost:5000/auth/logout", {
+      const apiBaseUrl = process.env.REACT_APP_API_BASE_URL;
+      await axios.get(`${apiBaseUrl}/auth/logout`, {
         withCredentials: true,
       });
       setUserData(null); // Clear user data after logout

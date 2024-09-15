@@ -31,7 +31,7 @@ app.use(passport.session());
 // Middleware
 app.use(
   cors({
-    origin: "http://localhost:3000", // React app URL
+    origin: "https://storied-pothos-6e0ce6.netlify.app/", // React app URL
     credentials: true,
   })
 );
