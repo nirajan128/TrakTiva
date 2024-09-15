@@ -29,12 +29,26 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 // Middleware
+// Define allowed origins
+const allowedOrigins = [
+  "https://storied-pothos-6e0ce6.netlify.app",
+  // Add other allowed origins if needed
+];
+
 app.use(
   cors({
-    origin: "https://storied-pothos-6e0ce6.netlify.app/", // React app URL
-    credentials: true,
+    origin: function (origin, callback) {
+      // Allow requests with no origin (like mobile apps or curl requests)
+      if (!origin || allowedOrigins.indexOf(origin) !== -1) {
+        return callback(null, true);
+      }
+      return callback(new Error("Not allowed by CORS"));
+    },
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    allowedHeaders: ["Content-Type", "Authorization"],
   })
 );
+
 app.use(express.static("public"));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json()); // Parse JSON bodies
