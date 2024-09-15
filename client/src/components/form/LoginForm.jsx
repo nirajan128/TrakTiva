@@ -59,7 +59,7 @@ function LoginForm() {
           value={userPassword}
           onChange={(e) => setUserPassword(e.target.value)}
         />
-        <button className="btn btnAccent">LogIN</button>
+        <button className="btn bgAccent">LogIN</button>
 
         {errorMessage && (
           <AlertStatus
