@@ -11,12 +11,10 @@ function UserData() {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const response = await axios.get(
-          "http://localhost:5000/user/userData",
-          {
-            withCredentials: true,
-          }
-        );
+        const apiBaseUrl = process.env.REACT_APP_API_BASE_URL;
+        const response = await axios.get(`${apiBaseUrl}/user/userData`, {
+          withCredentials: true,
+        });
         setUserData(response.data.user);
       } catch (err) {
         setError(err.response?.data?.message || "An error occurred");

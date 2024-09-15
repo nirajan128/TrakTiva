@@ -16,9 +16,10 @@ function LoginForm() {
     e.preventDefault();
     setErrorMessage("");
 
+    const apiBaseUrl = process.env.REACT_APP_API_BASE_URL;
     try {
       const response = await axios.post(
-        "http://localhost:5000/auth/login",
+        `${apiBaseUrl}/auth/login`,
         {
           email: userEmail,
           password: userPassword,
