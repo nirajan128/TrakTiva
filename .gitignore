@@ -1,0 +1,26 @@
+# Node modules for the whole project
+node_modules/
+
+# Logs
+*.log
+
+# Environment files
+.env
+
+# Build output directories (if applicable)
+build/
+dist/
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# IDEs and editors
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Package lock files (if not separately managed)
+package-lock.json
+yarn.lock

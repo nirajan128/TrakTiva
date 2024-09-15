@@ -1,0 +1,22 @@
+# Node modules for the frontend
+node_modules/
+
+# Environment files specific to the frontend
+.env
+
+# Build output for the frontend
+build/
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# IDEs and editors
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Package lock files for the frontend (if not in root .gitignore)
+package-lock.json
+yarn.lock

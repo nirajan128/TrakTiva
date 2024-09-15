@@ -1,24 +1,25 @@
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+# Node modules for the backend
+node_modules/
 
-# dependencies
-/node_modules
-/.pnp
-.pnp.js
+# Environment files specific to the backend
 .env
 
-# testing
-/coverage
+# Logs
+*.log
 
-# production
-/build
+# Build output for the backend (if applicable)
+dist/
 
-# misc
+# OS-specific files
 .DS_Store
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
+Thumbs.db
 
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
+# IDEs and editors
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Package lock files for the backend (if not in root .gitignore)
+package-lock.json
+yarn.lock
