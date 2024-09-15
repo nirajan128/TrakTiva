@@ -6,8 +6,8 @@ import {
   Routes,
   Navigate,
 } from "react-router-dom";
-import HomePage from "./section/HomePage";
-import UserData from "./Components/UserData";
+import HomePage from "./components/section/HomePage";
+import UserData from "./components/section/UserData";
 
 function App() {
   return (

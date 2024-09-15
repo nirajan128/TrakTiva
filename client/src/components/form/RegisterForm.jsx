@@ -1,8 +1,7 @@
-import LabelInput from "./Form/LabelInput";
+import LabelInput from "./LabelInput";
 import { useState } from "react";
-import Button from "./Button";
 import axios from "axios";
-import AlertStatus from "./AlertStatus";
+import AlertStatus from "../AlertStatus";
 import { useNavigate } from "react-router-dom";
 
 function RegisterForm() {
@@ -16,6 +15,39 @@ function RegisterForm() {
 
   const handleForm = async (e) => {
     e.preventDefault();
+    if (confirmPassword !== password) {
+      setErrorMessage("Passwords don't match");
+      return;
+    }
+
+    try {
+      const response = await axios.post(
+        "http://localhost:5000/auth/register",
+        {
+          name,
+          email,
+          password,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+          withCredentials: true, // Important for maintaining session
+        }
+      );
+      setSuccessMessage("Thank you for registering");
+      console.log(response.data);
+
+      setTimeout(() => {
+        navigate("/userData");
+      }, 2000); // Navigate after 2 seconds to show the success message
+    } catch (error) {
+      console.error("Registration failed:", error);
+      setErrorMessage(
+        error.response?.data?.message ||
+          "Registration failed. Please try again."
+      );
+    }
   };
 
   return (
@@ -51,7 +83,7 @@ function RegisterForm() {
           placeholder="Confirm Password"
         />
 
-        <Button content="Register" color="btn bg-primary" />
+        <button className="btn bgAccent">Register</button>
         {successMessage && (
           <AlertStatus
             message={successMessage}
@@ -70,3 +102,5 @@ function RegisterForm() {
     </div>
   );
 }
+
+export default RegisterForm;
