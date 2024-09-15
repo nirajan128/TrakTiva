@@ -1,22 +1,23 @@
-# Node modules for the frontend
-node_modules/
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
-# Environment files specific to the frontend
-.env
+# dependencies
+/node_modules
+/.pnp
+.pnp.js
 
-# Build output for the frontend
-build/
+# testing
+/coverage
 
-# OS-specific files
+# production
+/build
+
+# misc
 .DS_Store
-Thumbs.db
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
 
-# IDEs and editors
-.vscode/
-.idea/
-*.swp
-*.swo
-
-# Package lock files for the frontend (if not in root .gitignore)
-package-lock.json
-yarn.lock
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
