@@ -4,6 +4,10 @@ const router = express.Router();
 
 //Gets userData only if user is authenticated i.e (email and password matches)
 router.get("/userData", (req, res) => {
+  console.log("Request received for /userData");
+  console.log("Is authenticated:", req.isAuthenticated());
+  console.log("Session:", req.session);
+  console.log("User:", req.user);
   if (req.isAuthenticated()) {
     console.log("Accessing /user/secData route");
     res.json({ message: "Welcome to your dashboard", user: req.user });

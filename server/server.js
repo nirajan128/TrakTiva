@@ -12,14 +12,11 @@ dotenv.config();
 const app = express();
 const PORT = 5000;
 
-// Middleware
-const allowedOrigins = [
-  "https://traktiva.onrender.com", // frontend Render URL
-];
+app.set("trust proxy", 1); //should add if app is running on third party
 
 app.use(
   cors({
-    origin: allowedOrigins,
+    origin: "https://traktiva.onrender.com",
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
     credentials: true,
@@ -37,7 +34,9 @@ app.use(
       httpOnly: true,
       secure: true, // Secure in production
       sameSite: "none", // For cross-site requests
+      domain: ".onrender.com",
     },
+    proxy: true,
   })
 );
 
@@ -51,8 +50,17 @@ app.use(bodyParser.json()); // Parse JSON bodies
 
 // Define routes
 
+app.get("/health", (req, res) => {
+  res.status(200).send("OK");
+});
+
 app.use("/auth", authRoutes); // example route for auth
 app.use("/user", userData);
+
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).send("Something broke!");
+});
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);

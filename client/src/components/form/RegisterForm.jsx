@@ -22,7 +22,7 @@ function RegisterForm() {
 
     try {
       const response = await axios.post(
-        `${process.env.REACT_APP_API_BASE_URL}/auth/register`,
+        `https://traktivaserver.onrender.com/auth/register`,
         {
           name,
           email,

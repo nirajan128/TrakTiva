@@ -12,7 +12,7 @@ function UserData() {
     const fetchUserData = async () => {
       try {
         const response = await axios.get(
-          `${process.env.REACT_APP_API_BASE_URL}/user/userData`,
+          `https://traktivaserver.onrender.com/user/userData`,
           {
             withCredentials: true,
           }
@@ -28,8 +28,7 @@ function UserData() {
 
   const logOut = async () => {
     try {
-      const apiBaseUrl = process.env.REACT_APP_API_BASE_URL;
-      await axios.get(`${apiBaseUrl}/auth/logout`, {
+      await axios.get(`https://traktivaserver.onrender.com/auth/logout`, {
         withCredentials: true,
       });
       setUserData(null); // Clear user data after logout

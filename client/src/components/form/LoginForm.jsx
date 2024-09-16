@@ -18,7 +18,7 @@ function LoginForm() {
 
     try {
       const response = await axios.post(
-        `${process.env.REACT_APP_API_BASE_URL}/auth/login`,
+        `https://traktivaserver.onrender.com/auth/login`,
         {
           email: userEmail,
           password: userPassword,
