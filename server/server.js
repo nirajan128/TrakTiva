@@ -7,10 +7,19 @@ import session from "express-session";
 //routes
 import authRoutes from "./routes/auth.js";
 import userData from "./routes/userData.js";
+
 dotenv.config();
 const app = express();
 const PORT = 5000;
-app.use(cors());
+
+// CORS configuration
+app.use(
+  cors({
+    origin: "https://traktiva.onrender.com",
+    credentials: true,
+  })
+);
+
 app.use(
   session({
     secret: process.env.SESSION_SECRET,
@@ -29,8 +38,19 @@ app.use(
 app.use(bodyParser.json()); // Parse JSON bodies
 
 app.set("trust proxy", 1); //should add if app is running on third party
+// Additional CORS headers
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Credentials", "true");
+  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept, Authorization"
+  );
+  next();
+});
 
-//Session setup
+// Handle preflight requests
+app.options("*", cors());
 
 // Passport middleware
 app.use(passport.initialize());
