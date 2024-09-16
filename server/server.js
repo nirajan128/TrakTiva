@@ -12,7 +12,7 @@ const app = express();
 const PORT = 5000;
 app.use(
   cors({
-    origin: "https://traktiva.onrender.com",
+    origin: "https://traktiva.onrender.com/user",
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
     credentials: true,
