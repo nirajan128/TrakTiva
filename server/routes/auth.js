@@ -101,7 +101,7 @@ router.get("/logout", (req, res) => {
   });
 });
 
-app.get("/check", (req, res) => {
+router.get("/check", (req, res) => {
   if (req.isAuthenticated()) {
     res.json({ isAuthenticated: true });
   } else {
