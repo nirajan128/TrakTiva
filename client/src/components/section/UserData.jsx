@@ -17,6 +17,7 @@ function UserData() {
             withCredentials: true,
           }
         );
+        console.log(response.data.user);
         setUserData(response.data.user);
       } catch (err) {
         setError(err.response?.data?.message || "An error occurred");
