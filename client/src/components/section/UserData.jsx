@@ -1,23 +1,21 @@
-// src/components/section/UserData.jsx
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "./AuthContext";
 
 function UserData() {
   const [userData, setUserData] = useState(null);
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
-  const { logout } = useAuth();
 
   const fetchUserData = async () => {
     try {
       const response = await axios.get(
-        "https://traktivaserver.onrender.com/auth/user",
+        `https://traktivaserver.onrender.com/auth/user`,
         { withCredentials: true }
       );
       console.log("User data received:", response.data.user);
+
       setUserData(response.data.user);
       setError("");
     } catch (err) {
@@ -38,13 +36,18 @@ function UserData() {
     fetchUserData();
   }, []);
 
-  const handleLogout = async () => {
+  const logOut = async () => {
     try {
-      await logout();
+      await axios.get(`https://traktivaserver.onrender.com/auth/logout`, {
+        withCredentials: true,
+      });
+      setUserData(null);
       navigate("/");
     } catch (err) {
       console.error("Logout error:", err);
-      setError("An error occurred during logout");
+      setError(
+        err.response?.data?.message || "An error occurred during logout"
+      );
     }
   };
 
@@ -73,14 +76,15 @@ function UserData() {
         <div>
           <h2>Welcome, {userData.name}!</h2>
           <p>Email: {userData.email}</p>
-          <button className="btn btn-primary" onClick={handleLogout}>
+          {/* Display more user data as needed */}
+          <button className="btn btn-primary" onClick={logOut}>
             Logout
           </button>
         </div>
       ) : (
         <p>
           No user data available. Please{" "}
-          <button onClick={() => navigate("/login")}>log in</button>.
+          <button onClick={() => navigate("/")}>log in</button>.
         </p>
       )}
     </div>

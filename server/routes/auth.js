@@ -94,18 +94,31 @@ router.get("/check", (req, res) => {
   }
 });
 
-router.get("/user", (req, res) => {
+// Middleware to ensure the user is authenticated
+function ensureAuthenticated(req, res, next) {
   if (req.isAuthenticated()) {
-    // Send user information, excluding sensitive data like password
-    res.json({
-      user: {
-        id: req.user.id,
-        name: req.user.name,
-        email: req.user.email,
-      },
-    });
+    return next();
   } else {
-    res.status(401).json({ message: "Not authenticated" });
+    // For API routes, it's better to send a JSON response with an appropriate status code
+    res.status(401).json({ message: "Unauthorized. Please log in." });
+  }
+}
+router.get("/user", ensureAuthenticated, async (req, res) => {
+  try {
+    // Assuming req.user contains all the user data you want to send
+    // If you need to fetch additional data, do it here
+    const userData = {
+      name: req.user.name,
+      email: req.user.email,
+      // Add any other user properties you want to include
+    };
+
+    res.json({ message: "User data retrieved successfully", user: userData });
+  } catch (error) {
+    console.error("Error in /userData route:", error);
+    res
+      .status(500)
+      .json({ message: "An error occurred while retrieving user data" });
   }
 });
 

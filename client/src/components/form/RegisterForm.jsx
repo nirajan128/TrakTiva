@@ -1,8 +1,8 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import LabelInput from "./LabelInput";
+import { useState } from "react";
+import axios from "axios";
 import AlertStatus from "../AlertStatus";
-import { useAuth } from "../section/AuthContext"; // Make sure this path is correct
+import { useNavigate } from "react-router-dom";
 
 function RegisterForm() {
   const [email, setEmail] = useState("");
@@ -12,21 +12,31 @@ function RegisterForm() {
   const [errorMessage, setErrorMessage] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
   const navigate = useNavigate();
-  const { register } = useAuth(); // Use the register function from AuthContext
 
   const handleForm = async (e) => {
     e.preventDefault();
-    setErrorMessage("");
-    setSuccessMessage("");
-
     if (confirmPassword !== password) {
       setErrorMessage("Passwords don't match");
       return;
     }
 
     try {
-      await register({ name, email, password });
+      const response = await axios.post(
+        `https://traktivaserver.onrender.com/auth/register`,
+        {
+          name,
+          email,
+          password,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+          withCredentials: true, // Important for maintaining session
+        }
+      );
       setSuccessMessage("Thank you for registering");
+      console.log(response.data);
 
       setTimeout(() => {
         navigate("/dashboard");
@@ -43,6 +53,7 @@ function RegisterForm() {
   return (
     <div>
       <form onSubmit={handleForm} className="p-3 border border-dark">
+        {/* Form inputs remain the same */}
         <LabelInput
           type="text"
           name="name"

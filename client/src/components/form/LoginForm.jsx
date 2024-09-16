@@ -5,22 +5,33 @@ import RegisterForm from "./RegisterForm";
 import { useNavigate } from "react-router-dom";
 import AlertStatus from "../AlertStatus";
 import axios from "axios";
-import { useAuth } from "../section/AuthContext";
 
 function LoginForm() {
   const [userEmail, setUserEmail] = useState("");
   const [userPassword, setUserPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
-  const { login } = useAuth(); // Use the login function from AuthContext
 
   const handleLogin = async (e) => {
     e.preventDefault();
     setErrorMessage("");
 
     try {
-      await login({ email: userEmail, password: userPassword });
-      console.log("Login successful");
+      const response = await axios.post(
+        `https://traktivaserver.onrender.com/auth/login`,
+        {
+          email: userEmail,
+          password: userPassword,
+        },
+        {
+          withCredentials: true,
+        }
+      );
+
+      // Handle successful login
+      console.log("Login successful:", response.data);
+
+      // Navigate to UserData after successful login - (React router in App.jsx)
       navigate("/dashboard");
     } catch (error) {
       console.error("Login failed:", error);
