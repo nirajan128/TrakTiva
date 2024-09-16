@@ -8,32 +8,30 @@ function UserData() {
   const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const fetchUserData = async () => {
-      try {
-        const response = await axios.get(
-          `https://traktivaserver.onrender.com/user/userData`,
-          {
-            withCredentials: true,
-          }
-        );
-        console.log("User data received:", response.data.user);
-        setUserData(response.data.user);
-      } catch (err) {
-        console.error("Error fetching user data:", err);
-        setError(
-          err.response?.data?.message ||
-            "An error occurred while fetching user data"
-        );
-        if (err.response?.status === 401) {
-          // Unauthorized, redirect to login
-          navigate("/login");
-        }
-      } finally {
-        setIsLoading(false);
+  const fetchUserData = async () => {
+    try {
+      const response = await axios.get(
+        `https://traktivaserver.onrender.com/user/userData`,
+        { withCredentials: true }
+      );
+      console.log("User data received:", response.data.user);
+      setUserData(response.data.user);
+      setError("");
+    } catch (err) {
+      console.error("Error fetching user data:", err);
+      setError(
+        err.response?.data?.message ||
+          "An error occurred while fetching user data"
+      );
+      if (err.response?.status === 401) {
+        navigate("/login");
       }
-    };
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
+  useEffect(() => {
     fetchUserData();
   }, [navigate]);
 
@@ -52,26 +50,41 @@ function UserData() {
     }
   };
 
+  const handleRetry = () => {
+    setIsLoading(true);
+    setError("");
+    fetchUserData();
+  };
+
   if (isLoading) {
-    return <p>Loading...</p>;
+    return <p>Loading user data... Please wait.</p>;
   }
 
   if (error) {
-    return <p>Error: {error}</p>;
+    return (
+      <div>
+        <p>Error: {error}</p>
+        <button onClick={handleRetry}>Retry</button>
+      </div>
+    );
   }
 
   return (
     <div>
       {userData ? (
         <div>
-          <p>Welcome, {userData.name}!</p>
+          <h2>Welcome, {userData.name}!</h2>
+          <p>Email: {userData.email}</p>
           {/* Display more user data as needed */}
           <button className="btn btn-primary" onClick={logOut}>
             Logout
           </button>
         </div>
       ) : (
-        <p>No user data available. Please log in.</p>
+        <p>
+          No user data available. Please{" "}
+          <button onClick={() => navigate("/login")}>log in</button>.
+        </p>
       )}
     </div>
   );
