@@ -8,22 +8,6 @@ import session from "express-session";
 import authRoutes from "./routes/auth.js";
 import userData from "./routes/userData.js";
 dotenv.config();
-
-const app = express();
-const PORT = 5000;
-
-app.set("trust proxy", 1); //should add if app is running on third party
-
-app.use(
-  cors({
-    origin: "https://traktiva.onrender.com",
-    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-    allowedHeaders: ["Content-Type", "Authorization"],
-    credentials: true,
-  })
-);
-
-//Session setup
 app.use(
   session({
     secret: process.env.SESSION_SECRET,
@@ -39,6 +23,23 @@ app.use(
     proxy: true,
   })
 );
+app.use(bodyParser.json()); // Parse JSON bodies
+
+const app = express();
+const PORT = 5000;
+
+app.use(
+  cors({
+    origin: "https://traktiva.onrender.com",
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+    credentials: true,
+  })
+);
+
+app.set("trust proxy", 1); //should add if app is running on third party
+
+//Session setup
 
 // Passport middleware
 app.use(passport.initialize());
@@ -46,7 +47,6 @@ app.use(passport.session());
 
 app.use(express.static("public"));
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json()); // Parse JSON bodies
 
 // Define routes
 
