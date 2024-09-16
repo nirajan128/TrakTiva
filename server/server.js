@@ -17,9 +17,12 @@ app.use(
   session({
     secret: process.env.SESSION_SECRET,
     resave: false, //resave: forces a session to be stored in a session store (ex: database)
-    saveUninitialized: true, //saveUninitialaized: forces a session that is unInitialized to be savd in session store, a session is UI when it is new but not modiefied
+    saveUninitialized: false, //saveUninitialaized: forces a session that is unInitialized to be savd in session store, a session is UI when it is new but not modiefied
     cookie: {
       maxAge: 1000 * 60 * 60 * 24, //period of cookier in milisecond totals to 1 day
+      /* httpOnly: true, // Ensures the cookie is only accessible by the server
+      secure: true, // Use secure cookies in production
+      sameSite: "none", // For cross-site cookies */
     },
   })
 );
@@ -29,23 +32,13 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 // Middleware
-// Define allowed origins
 const allowedOrigins = [
-  "https://storied-pothos-6e0ce6.netlify.app",
-  // Add other allowed origins if needed
+  "https://traktiva.onrender.com/", // Your frontend Render URL
 ];
 
 app.use(
   cors({
-    origin: function (origin, callback) {
-      // Allow requests with no origin (like mobile apps or curl requests)
-      if (!origin || allowedOrigins.indexOf(origin) !== -1) {
-        return callback(null, true);
-      }
-      return callback(new Error("Not allowed by CORS"));
-    },
-    methods: ["GET", "POST", "PUT", "DELETE"],
-    allowedHeaders: ["Content-Type", "Authorization"],
+    origin: allowedOrigins,
     credentials: true,
   })
 );
