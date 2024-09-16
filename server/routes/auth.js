@@ -9,21 +9,6 @@ router.get("/test", (req, res) => {
   res.send("API is working!");
 });
 
-router.get("/user", (req, res) => {
-  if (req.isAuthenticated()) {
-    // Send user information, excluding sensitive data like password
-    res.json({
-      user: {
-        id: req.user.id,
-        name: req.user.name,
-        email: req.user.email,
-      },
-    });
-  } else {
-    res.status(401).json({ message: "Not authenticated" });
-  }
-});
-
 //for registering user
 router.post("/register", async (req, res, next) => {
   try {
@@ -106,6 +91,21 @@ router.get("/check", (req, res) => {
     res.json({ isAuthenticated: true });
   } else {
     res.json({ isAuthenticated: false });
+  }
+});
+
+router.get("/user", (req, res) => {
+  if (req.isAuthenticated()) {
+    // Send user information, excluding sensitive data like password
+    res.json({
+      user: {
+        id: req.user.id,
+        name: req.user.name,
+        email: req.user.email,
+      },
+    });
+  } else {
+    res.status(401).json({ message: "Not authenticated" });
   }
 });
 
