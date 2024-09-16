@@ -101,4 +101,12 @@ router.get("/logout", (req, res) => {
   });
 });
 
+app.get("/check", (req, res) => {
+  if (req.isAuthenticated()) {
+    res.json({ isAuthenticated: true });
+  } else {
+    res.json({ isAuthenticated: false });
+  }
+});
+
 export default router;

@@ -1,12 +1,15 @@
+// src/components/section/UserData.jsx
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../context/AuthContext";
 
 function UserData() {
   const [userData, setUserData] = useState(null);
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
+  const { logout } = useAuth();
 
   const fetchUserData = async () => {
     try {
@@ -24,7 +27,7 @@ function UserData() {
           "An error occurred while fetching user data"
       );
       if (err.response?.status === 401) {
-        navigate("/login");
+        navigate("/");
       }
     } finally {
       setIsLoading(false);
@@ -33,20 +36,15 @@ function UserData() {
 
   useEffect(() => {
     fetchUserData();
-  }, [navigate]);
+  }, []);
 
-  const logOut = async () => {
+  const handleLogout = async () => {
     try {
-      await axios.get(`https://traktivaserver.onrender.com/auth/logout`, {
-        withCredentials: true,
-      });
-      setUserData(null);
+      await logout();
       navigate("/");
     } catch (err) {
       console.error("Logout error:", err);
-      setError(
-        err.response?.data?.message || "An error occurred during logout"
-      );
+      setError("An error occurred during logout");
     }
   };
 
@@ -75,8 +73,7 @@ function UserData() {
         <div>
           <h2>Welcome, {userData.name}!</h2>
           <p>Email: {userData.email}</p>
-          {/* Display more user data as needed */}
-          <button className="btn btn-primary" onClick={logOut}>
+          <button className="btn btn-primary" onClick={handleLogout}>
             Logout
           </button>
         </div>
