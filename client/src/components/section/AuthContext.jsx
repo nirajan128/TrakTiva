@@ -11,7 +11,7 @@ export const AuthProvider = ({ children }) => {
   const checkAuthStatus = async () => {
     try {
       const response = await axios.get(
-        "https://traktivaserver.onrender.com/auth/check",
+        "https://traktivaserver.onrender.com/auth/user",
         {
           withCredentials: true,
         }
