@@ -19,10 +19,10 @@ function RegisterForm() {
       setErrorMessage("Passwords don't match");
       return;
     }
-    const apiBaseUrl = process.env.REACT_APP_API_BASE_URL;
+
     try {
       const response = await axios.post(
-        `${apiBaseUrl}/auth/register`,
+        `${process.env.REACT_APP_API_BASE_URL}/auth/register`,
         {
           name,
           email,

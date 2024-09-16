@@ -19,10 +19,9 @@ app.use(
     resave: false, //resave: forces a session to be stored in a session store (ex: database)
     saveUninitialized: false, //saveUninitialaized: forces a session that is unInitialized to be savd in session store, a session is UI when it is new but not modiefied
     cookie: {
-      maxAge: 1000 * 60 * 60 * 24, //period of cookier in milisecond totals to 1 day
-      /* httpOnly: true, // Ensures the cookie is only accessible by the server
-      secure: true, // Use secure cookies in production
-      sameSite: "none", // For cross-site cookies */
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production", // Secure in production
+      sameSite: "none", // For cross-site requests
     },
   })
 );
@@ -33,7 +32,7 @@ app.use(passport.session());
 
 // Middleware
 const allowedOrigins = [
-  "https://traktiva.onrender.com/", // Your frontend Render URL
+  "https://traktiva.onrender.com/", // frontend Render URL
 ];
 
 app.use(
