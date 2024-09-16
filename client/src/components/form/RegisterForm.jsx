@@ -39,7 +39,7 @@ function RegisterForm() {
       console.log(response.data);
 
       setTimeout(() => {
-        navigate("/userData");
+        navigate("/dashboard");
       }, 2000); // Navigate after 2 seconds to show the success message
     } catch (error) {
       console.error("Registration failed:", error);

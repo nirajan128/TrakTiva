@@ -32,7 +32,7 @@ function LoginForm() {
       console.log("Login successful:", response.data);
 
       // Navigate to UserData after successful login - (React router in App.jsx)
-      navigate("/userData");
+      navigate("/dashboard");
     } catch (error) {
       console.error("Login failed:", error);
       setErrorMessage(
