@@ -14,22 +14,15 @@ const PORT = 5000;
 
 // Middleware
 const allowedOrigins = [
-  "https://traktiva.onrender.com/", // frontend Render URL
+  "https://traktiva.onrender.com", // frontend Render URL
 ];
 
 app.use(
   cors({
-    origin: (origin, callback) => {
-      if (allowedOrigins.includes(origin) || !origin) {
-        // Allow requests with no origin (e.g., Postman)
-        callback(null, true);
-      } else {
-        callback(new Error("Not allowed by CORS"));
-      }
-    },
-    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"], // Allow methods
-    allowedHeaders: ["Content-Type", "Authorization"], // Allow headers
-    credentials: true, // Allow credentials (cookies, authorization headers)
+    origin: allowedOrigins,
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+    credentials: true,
   })
 );
 
@@ -42,7 +35,7 @@ app.use(
     cookie: {
       maxAge: 1000 * 60 * 60 * 24, // Cookie expiry time
       httpOnly: true,
-      secure: process.env.NODE_ENV === "production", // Secure in production
+      secure: true, // Secure in production
       sameSite: "none", // For cross-site requests
     },
   })
