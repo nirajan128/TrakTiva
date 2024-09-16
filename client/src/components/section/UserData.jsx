@@ -14,7 +14,7 @@ function UserData() {
   const fetchUserData = async () => {
     try {
       const response = await axios.get(
-        `https://traktivaserver.onrender.com/user/userData`,
+        "https://traktivaserver.onrender.com/userData",
         { withCredentials: true }
       );
       console.log("User data received:", response.data.user);

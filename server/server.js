@@ -66,7 +66,7 @@ app.get("/health", (req, res) => {
 });
 
 app.use("/auth", authRoutes); // example route for auth
-app.use("/user", userData);
+app.use("/", userData);
 
 app.use((err, req, res, next) => {
   console.error(err.stack);
