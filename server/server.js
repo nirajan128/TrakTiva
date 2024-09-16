@@ -8,6 +8,16 @@ import session from "express-session";
 import authRoutes from "./routes/auth.js";
 import userData from "./routes/userData.js";
 dotenv.config();
+const app = express();
+const PORT = 5000;
+app.use(
+  cors({
+    origin: "https://traktiva.onrender.com",
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+    credentials: true,
+  })
+);
 app.use(
   session({
     secret: process.env.SESSION_SECRET,
@@ -24,18 +34,6 @@ app.use(
   })
 );
 app.use(bodyParser.json()); // Parse JSON bodies
-
-const app = express();
-const PORT = 5000;
-
-app.use(
-  cors({
-    origin: "https://traktiva.onrender.com",
-    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-    allowedHeaders: ["Content-Type", "Authorization"],
-    credentials: true,
-  })
-);
 
 app.set("trust proxy", 1); //should add if app is running on third party
 
