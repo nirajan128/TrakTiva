@@ -10,14 +10,7 @@ import userData from "./routes/userData.js";
 dotenv.config();
 const app = express();
 const PORT = 5000;
-app.use(
-  cors({
-    origin: "https://traktiva.onrender.com/user",
-    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-    allowedHeaders: ["Content-Type", "Authorization"],
-    credentials: true,
-  })
-);
+app.use(cors());
 app.use(
   session({
     secret: process.env.SESSION_SECRET,
