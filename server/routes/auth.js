@@ -72,7 +72,7 @@ router.post("/login", (req, res, next) => {
           email: user.email,
         },
       }); */
-      return res.redirect("/user");
+      return res.redirect("/auth/user");
     });
   })(req, res, next);
 });
