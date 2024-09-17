@@ -64,14 +64,15 @@ router.post("/login", (req, res, next) => {
       if (err) {
         return next(err);
       }
-      return res.json({
+      /* return res.json({
         message: "Login successful",
         user: {
           id: user.id,
           name: user.name,
           email: user.email,
         },
-      });
+      }); */
+      return res.redirect("/user");
     });
   })(req, res, next);
 });
